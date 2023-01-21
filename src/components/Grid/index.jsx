@@ -1,8 +1,11 @@
 import GridPage from "../../pages/Grid"
 import styled from "styled-components"
 import GridContext from "../../contexts/GridContext"
+import { useContext } from "react"
+import Robot from "../../pages/Robot"
 
 export default function Grid(){
+    const {pages} = useContext(GridContext)
     return(
         <GridDiv>
             <div>
@@ -12,7 +15,7 @@ export default function Grid(){
             <div>
                 <h2>Explore Mars</h2>
                 <p>Choose your map and rover position to explore Mars</p>
-                <GridPage />
+                {pages === 1 ? <GridPage /> : pages === 2 ? <Robot /> : null}    
             </div>
         </GridDiv>
     )
