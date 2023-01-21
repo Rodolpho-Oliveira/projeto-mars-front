@@ -3,6 +3,7 @@ import styled from "styled-components"
 import GridContext from "../../contexts/GridContext"
 import { useContext } from "react"
 import Robot from "../../pages/Robot"
+import Movement from "../../pages/Movement"
 
 export default function Grid(){
     const {pages} = useContext(GridContext)
@@ -15,7 +16,7 @@ export default function Grid(){
             <div>
                 <h2>Explore Mars</h2>
                 <p>Choose your map and rover position to explore Mars</p>
-                {pages === 1 ? <GridPage /> : pages === 2 ? <Robot /> : null}    
+                {pages === 1 ? <GridPage /> : pages === 2 ? <Robot /> : pages === 3 ? <Movement/> : null}    
             </div>
         </GridDiv>
     )
