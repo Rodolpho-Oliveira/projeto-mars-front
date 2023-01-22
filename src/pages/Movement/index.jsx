@@ -73,7 +73,7 @@ export default function Movement() {
     }
     
     return (
-        <div>
+        <MoveDiv>
             <div>
                 {mapGrip()}
             </div>
@@ -82,9 +82,22 @@ export default function Movement() {
                 <Button onClick={() => move("⬆")}>⬆</Button>
                 <Button onClick={() => move("↪90")}>↪90</Button>
             </ButtonGroup>
-        </div>
+        </MoveDiv>
     )
 }
+
+
+const MoveDiv = styled.div`
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    Button{
+        margin: 5px;
+    }
+`
 
 const RobotImage = styled.img`
     width: 20px;
@@ -99,4 +112,5 @@ const Grid = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin: 8px;
 `

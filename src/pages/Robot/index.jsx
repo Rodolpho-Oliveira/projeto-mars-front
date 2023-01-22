@@ -1,11 +1,12 @@
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, Slider } from "@mui/material"
 import { useContext } from "react"
+import styled from "styled-components"
 import GridContext from "../../contexts/GridContext"
 
 export default function Robot() {
     const {grid, setPages, setRover, rover} = useContext(GridContext)
     return(
-        <div>
+        <RobotDiv>
             <p>Choose robot horizontal position</p>
             <Slider
                 size="normal"
@@ -19,6 +20,7 @@ export default function Robot() {
             <p>Choose robot vertical position</p>
             <Slider
                 size="normal"
+                width="100px"
                 defaultValue={1}
                 max={grid.height}
                 min={1}
@@ -43,6 +45,17 @@ export default function Robot() {
                 </RadioGroup>
             </FormControl>
             <Button onClick={() => setPages(3)} variant="contained">NEXT</Button>
-        </div>
+        </RobotDiv>
     )
 }
+
+const RobotDiv = styled.div`
+    width: 340px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    Button{
+        width: 300px;
+    }
+`
