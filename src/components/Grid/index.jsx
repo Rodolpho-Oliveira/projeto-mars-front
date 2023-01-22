@@ -10,7 +10,7 @@ export default function Grid(){
     return(
         <GridDiv>
             <div>
-                <img src="https://cdn-icons-png.flaticon.com/512/5403/5403095.png" alt="logo"/>
+                <Logo src="https://cdn-icons-png.flaticon.com/512/5403/5403095.png" alt="logo"/>
                 <h1>Mars Rover</h1>
             </div>
             <div>
@@ -37,14 +37,17 @@ const GridDiv = styled.div`
         margin: 20px 0px;
         color: #451804;
     }
-    img{
-        width: 200px;
-        height: 200px;
-    }
     form {
         display: flex;
         flex-direction: column;
         align-items: center;
         margin-top: 20px;
     }
-    `
+`
+
+const Logo = styled.img`
+
+    width: 200px;
+    height: 200px;
+`
+

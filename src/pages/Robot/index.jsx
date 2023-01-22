@@ -31,14 +31,15 @@ export default function Robot() {
                 <RadioGroup
                     row
                     aria-labelledby="demo-radio-buttons-group-label"
-                    defaultValue="North"
+                    defaultValue="N"
                     name="radio-buttons-group"
+                    onChange={(e) => setRover({...rover, direction: e.target.value})}
                     
                 >
-                    <FormControlLabel value="North" control={<Radio />} label="North" />
-                    <FormControlLabel value="East" control={<Radio />} label="East" />
-                    <FormControlLabel value="South" control={<Radio />} label="South" />
-                    <FormControlLabel value="West" control={<Radio />} label="West" />
+                    <FormControlLabel value="N" control={<Radio />} label="North" />
+                    <FormControlLabel value="E" control={<Radio />} label="East" />
+                    <FormControlLabel value="S" control={<Radio />} label="South" />
+                    <FormControlLabel value="W" control={<Radio />} label="West" />
                 </RadioGroup>
             </FormControl>
             <Button onClick={() => setPages(3)} variant="contained">NEXT</Button>

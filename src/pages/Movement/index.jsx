@@ -5,18 +5,6 @@ import GridContext from "../../contexts/GridContext"
 
 export default function Movement() {
     const {movement, setMovement, grid, rover, setRover} = useContext(GridContext)
-    
-    const mapGrip = () => {
-        let gridMap = []
-        for(let i = 0; i < grid.height; i++){
-            let row = []
-            for(let j = 0; j < grid.width; j++){
-                row.push(<Grid>◼</Grid>)
-            }
-            gridMap.push(<div style={{display: "flex"}}>{row}</div>)
-        }
-        return gridMap
-    }
 
     const move = (direction) => {
         let newRover = {...rover}
@@ -44,7 +32,7 @@ export default function Movement() {
                 }
                 break
             case "⬆":
-                if(newRover.direction === "N"){
+                if(newRover.direction === "S"){
                     if(newRover.y < grid.height - 1){
                         newRover.y++
                     }
@@ -52,7 +40,7 @@ export default function Movement() {
                     if(newRover.x < grid.width - 1){
                         newRover.x++
                     }
-                }else if(newRover.direction === "S"){
+                }else if(newRover.direction === "N"){
                     if(newRover.y > 0){
                         newRover.y--
                     }
@@ -65,7 +53,23 @@ export default function Movement() {
         }
         setRover(newRover)
         setMovement(movement + direction)
-        console.log(newRover)
+        console.log(rover.direction)
+    }
+
+    const mapGrip = () => {
+        let gridMap = []
+        for(let i = 0; i < grid.height; i++){
+            let row = []
+            for(let j = 0; j < grid.width; j++){
+                if(i === rover.y && j === rover.x){
+                    row.push(<Grid><RobotImage alt="robot" width="10" height="10" direction={rover.direction} src="https://cdn-icons-png.flaticon.com/512/5403/5403095.png" /></Grid>)
+                }else{
+                    row.push(<Grid>◼</Grid>)
+                }
+            }
+            gridMap.push(<div style={{display: "flex"}}>{row}</div>)
+        }
+        return gridMap
     }
     
     return (
@@ -82,12 +86,10 @@ export default function Movement() {
     )
 }
 
-const robotImage = styled.img`
-    width: 50px;
-    height: 50px;
-    position: absolute;
-    top: 0;
-    left: 0;
+const RobotImage = styled.img`
+    width: 20px;
+    height: 20px;
+    transform: rotate(${props => props.direction === "N" ? "0deg" : props.direction === "E" ? "90deg" : props.direction === "S" ? "180deg" : "270deg"});
 `
 
 const Grid = styled.div`
