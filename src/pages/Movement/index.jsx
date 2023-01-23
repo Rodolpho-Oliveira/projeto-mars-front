@@ -1,10 +1,12 @@
 import { Button, ButtonGroup } from "@mui/material"
+import axios from "axios"
 import { useContext } from "react"
 import styled from "styled-components"
 import GridContext from "../../contexts/GridContext"
 
 export default function Movement() {
     const {movement, setMovement, grid, rover, setRover} = useContext(GridContext)
+    const token = localStorage.getItem("token")
 
     const move = (direction) => {
         let newRover = {...rover}
@@ -72,6 +74,22 @@ export default function Movement() {
         }
         return gridMap
     }
+
+    function submit(){
+        axios
+        .post(import.meta.env.VITE_URL + "/robot", {height: grid.height, length: grid.width, instruction: movement, x: rover.x, y: rover.y, direction: rover.direction}, {headers: {Authorization: `Bearer ${token}`}})
+        .then((res) => {
+            console.log(res)
+            console.log(rover)
+        })
+        .catch((err) => {
+            console.log(rover)
+            console.log(err)
+            if(err.response.data === "Authorization token not found"){
+                window.location.href = "/login"
+            }
+        })
+    }
     
     return (
         <MoveDiv>
@@ -83,7 +101,7 @@ export default function Movement() {
                 <Button onClick={() => move("M")}>⬆</Button>
                 <Button onClick={() => move("R")}>↪90</Button>
             </ButtonGroup>
-            <Button variant="outlined" onClick={() => console.log("finish")}>NEXT</Button>
+            <Button variant="outlined" onClick={() => submit()}>NEXT</Button>
         </MoveDiv>
     )
 }

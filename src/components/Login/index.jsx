@@ -7,6 +7,7 @@ export default function Login(){
     const navigate = useNavigate()
     const [userLogin, setUserLogin] = useState({email: "", password: ""})
     const [error, setError] = useState(false)
+    
     return(
         <LoginPage>
             <img src="https://cdn-icons-png.flaticon.com/512/5403/5403095.png" alt="logo"/>
@@ -29,9 +30,7 @@ export default function Login(){
             console.log(e.response)
         })
         promise.then((response) => {
-            console.log(response)
-            localStorage.setItem("token", response.data[0])
-            localStorage.setItem("email", response.data[1])
+            localStorage.setItem("token", response.data)
             navigate(`/menu/`)
         })
     }
