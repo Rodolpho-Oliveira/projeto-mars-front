@@ -9,6 +9,7 @@ export default function Movement() {
     const token = localStorage.getItem("token")
     const [disable, setDisable] = useState(false)
     const [open, setOpen] = useState(false)
+    const [submitRover, setSubmitRover] = useState({})
 
     const move = (direction) => {
         let newRover = {...rover}
@@ -62,7 +63,6 @@ export default function Movement() {
                 break
         }
         setRover(newRover)
-        console.log(movement)
     }
 
     const mapGrip = () => {
@@ -90,6 +90,7 @@ export default function Movement() {
         .then((res) => {
             console.log(res)
             setDisable(false)
+            setSubmitRover(res.data)
         })
         .catch((err) => {
             setDisable(false)
@@ -118,28 +119,33 @@ export default function Movement() {
                 <Button onClick={() => move("M")}>⬆</Button>
                 <Button onClick={() => move("R")}>↪90</Button>
             </ButtonGroup>
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <Button variant="outlined" onClick={() => {
+                handleClickOpen()
+                submit()
+                }}>
                 FINISH
             </Button>
             <Dialog
                 open={open}
-                onClose={handleClose}
                 aria-labelledby="alert-dialog-title"
                 aria-describedby="alert-dialog-description"
-            >
+            >   
                 <DialogTitle id="alert-dialog-title">
                 {"Create another robot?"}
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        You can create another robot after this one.
+                        Your status: <br/>
+                        Landing Position: {submitRover.LandingPosition}<br/>
+                        Instruction: {submitRover.Instruction}<br/>
+                        Final Position: {submitRover.FinalPosition} 
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => {
                         handleClose
-                        window.location.href = "/login"
                         localStorage.removeItem("token")
+                        window.location.href = "/login"
                         }}>No</Button>
                     <Button onClick={() => {
                         handleClose
@@ -147,7 +153,6 @@ export default function Movement() {
                         setRover({x: 1, y: 1, direction: "N"})
                         setGrid({width: 1, height: 1})
                         setPages(1)
-                        submit()
                     }} >Yes</Button>
                 </DialogActions>
             </Dialog>
