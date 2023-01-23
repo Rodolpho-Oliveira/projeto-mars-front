@@ -1,12 +1,14 @@
-import { Button, ButtonGroup } from "@mui/material"
+import { Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from "@mui/material"
 import axios from "axios"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import styled from "styled-components"
 import GridContext from "../../contexts/GridContext"
 
 export default function Movement() {
-    const {movement, setMovement, grid, rover, setRover} = useContext(GridContext)
+    const {movement, setMovement, grid, rover, setRover, setPages, setGrid} = useContext(GridContext)
     const token = localStorage.getItem("token")
+    const [disable, setDisable] = useState(false)
+    const [open, setOpen] = useState(false)
 
     const move = (direction) => {
         let newRover = {...rover}
@@ -76,19 +78,28 @@ export default function Movement() {
     }
 
     function submit(){
+        setDisable(true)
         axios
         .post(import.meta.env.VITE_URL + "/robot", {height: grid.height, length: grid.width, instruction: movement, x: rover.x, y: rover.y, direction: rover.direction}, {headers: {Authorization: `Bearer ${token}`}})
         .then((res) => {
             console.log(res)
-            console.log(rover)
+            setDisable(false)
         })
         .catch((err) => {
-            console.log(rover)
+            setDisable(false)
             console.log(err)
             if(err.response.data === "Authorization token not found"){
                 window.location.href = "/login"
             }
         })
+    }
+
+    const handleClickOpen = () => {
+        setOpen(true)
+    }
+
+    const handleClose = () => {
+        setOpen(false)
     }
     
     return (
@@ -101,7 +112,39 @@ export default function Movement() {
                 <Button onClick={() => move("M")}>⬆</Button>
                 <Button onClick={() => move("R")}>↪90</Button>
             </ButtonGroup>
-            <Button variant="outlined" onClick={() => submit()}>NEXT</Button>
+            <Button variant="outlined" onClick={handleClickOpen}>
+                FINISH
+            </Button>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                {"Create another robot?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        You can create another robot after this one.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={() => {
+                        handleClose
+                        window.location.href = "/login"
+                        localStorage.removeItem("token")
+                        }}>No</Button>
+                    <Button onClick={() => {
+                        handleClose
+                        setMovement("")
+                        setRover({x: 1, y: 1, direction: "N"})
+                        setGrid({width: 1, height: 1})
+                        setPages(1)
+                        submit()
+                    }} >Yes</Button>
+                </DialogActions>
+            </Dialog>
         </MoveDiv>
     )
 }
