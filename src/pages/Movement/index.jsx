@@ -23,6 +23,7 @@ export default function Movement() {
                 }else if(newRover.direction === "E"){
                     newRover.direction = "N"
                 }
+                setMovement(movement + direction)
                 break
             case "R":
                 if(newRover.direction === "N"){
@@ -34,29 +35,34 @@ export default function Movement() {
                 }else if(newRover.direction === "W"){
                     newRover.direction = "N"
                 }
+                setMovement(movement + direction)
                 break
             case "M":
                 if(newRover.direction === "N"){
                     if(newRover.y <= grid.height - 1){
+                        setMovement(movement + direction)
                         newRover.y++
                     }
                 }else if(newRover.direction === "E"){
                     if(newRover.x <= grid.width - 1){
+                        setMovement(movement + direction)
                         newRover.x++
                     }
                 }else if(newRover.direction === "S"){
                     if(newRover.y > 1){
+                        setMovement(movement + direction)
                         newRover.y--
                     }
                 }else if(newRover.direction === "W"){
                     if(newRover.x > 1){
+                        setMovement(movement + direction)
                         newRover.x--
                     }
                 }
                 break
         }
         setRover(newRover)
-        setMovement(movement + direction)
+        console.log(movement)
     }
 
     const mapGrip = () => {
