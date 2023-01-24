@@ -3,12 +3,14 @@ import Login from "./components/Login"
 import SignUp from "./components/SignUp"
 import Grid from "./components/Grid"
 import { GridProvider } from "./contexts/GridContext"
+import GlobalStyle from "./GlobalStyles"
 
 function App() {
 
   return (
     <div className="App"> 
       <GridProvider>
+        <GlobalStyle/>
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<SignUp/>}/>

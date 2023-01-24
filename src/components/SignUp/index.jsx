@@ -66,7 +66,7 @@ const SignUpPage = styled.div`
         font-size: 50px;
         font-weight: 700;
         margin: 20px 0px;
-        color: #451804;
+        color: #e77d11;
     }
     img{
         width: 200px;
