@@ -26,7 +26,6 @@ export default function SignUp(){
         e.preventDefault()
         const promise = axios.post(`${import.meta.env.VITE_URL}/signup`, userSignUp)
         promise.catch((e) => {
-            console.log(import.meta.env.VITE_URL)
             setError(true)
             console.log(e)
         })

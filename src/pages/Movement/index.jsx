@@ -89,7 +89,6 @@ export default function Movement() {
         axios
         .post(import.meta.env.VITE_URL + "/robot", {height: grid.height, length: grid.width, instruction: movement, x: rover.x, y: rover.y, direction: rover.direction}, {headers: {Authorization: `Bearer ${token}`}})
         .then((res) => {
-            console.log(res)
             setDisable(false)
             setSubmitRover(res.data)
         })
