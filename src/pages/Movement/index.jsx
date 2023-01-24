@@ -8,11 +8,12 @@ export default function Movement() {
     const {movement, setMovement, grid, rover, setRover, setPages, setGrid} = useContext(GridContext)
     const token = localStorage.getItem("token")
     const [disable, setDisable] = useState(false)
+    const [moveRover, setMoveRover] = useState({x: rover.x, y: rover.y, direction: rover.direction})
     const [open, setOpen] = useState(false)
     const [submitRover, setSubmitRover] = useState({})
 
     const move = (direction) => {
-        let newRover = {...rover}
+        let newRover = {...moveRover}
         switch(direction){
             case "L":
                 if(newRover.direction === "N"){
@@ -62,7 +63,7 @@ export default function Movement() {
                 }
                 break
         }
-        setRover(newRover)
+        setMoveRover(newRover)
     }
 
     const mapGrip = () => {
@@ -72,8 +73,8 @@ export default function Movement() {
             let row = []
             for(let j = 1; j <= grid.width; j++){
                 index++
-                if(i === rover.y && j === rover.x){
-                    row.push(<Grid key={index}><RobotImage alt="robot" width="10" height="10" direction={rover.direction} src="https://cdn-icons-png.flaticon.com/512/5403/5403095.png" /></Grid>)
+                if(i === moveRover.y && j === moveRover.x){
+                    row.push(<Grid key={index}><RobotImage alt="robot" width="10" height="10" direction={moveRover.direction} src="https://cdn-icons-png.flaticon.com/512/5403/5403095.png" /></Grid>)
                 }else{
                     row.push(<Grid key={index}>◼</Grid>)
                 }
